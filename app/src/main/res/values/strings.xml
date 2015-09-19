@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Movie App</string>
+    <string name="action_sort">Sort</string>
+
+    <string name="main_sort_by">Sort by</string>
+    <string name="main_sort_most_popular">Most popular</string>
+    <string name="main_sort_highest_rated">Highest rated</string>
+
+    <string name="progress_error">Error</string>
+    <string name="progress_retry">Try Again</string>
+
+</resources>
