@@ -11,12 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import id.gits.popularmovie1.adapters.MovieListAdapter;
 import id.gits.popularmovie1.apis.RetrofitHelper;
 import id.gits.popularmovie1.apis.daos.DiscoverMovieApiDao;
+import id.gits.popularmovie1.apis.daos.ErrorApiDao;
 import id.gits.popularmovie1.apis.daos.MovieDao;
 import id.gits.popularmovie1.utils.Constant;
 import id.gits.popularmovie1.utils.MyProgressView;
@@ -27,8 +32,10 @@ public class MainActivity extends BaseActivity {
     private final static int MAX_WIDTH_COL_DP = 185;
     private final static String STATE_SORT = "stateSort";
 
-    private RecyclerView mRecyclerView;
-    private MyProgressView mProgressView;
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.progress_view)
+    MyProgressView mProgressView;
 
     private StaggeredGridLayoutManager mLayoutManager;
     private MovieListAdapter mAdapter;
@@ -41,9 +48,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mProgressView = (MyProgressView) findViewById(R.id.progress_view);
 
         mRecyclerView.setVisibility(View.GONE);
 
@@ -144,7 +148,15 @@ public class MainActivity extends BaseActivity {
                             mRecyclerView.setVisibility(View.VISIBLE);
                             mProgressView.stopAndGone();
                         } else {
-                            mProgressView.stopAndError(response.errorBody().toString(), true);
+                            Gson gson = new Gson();
+                            try {
+                                ErrorApiDao errorApiDao = gson.fromJson(response.errorBody().string().toString(), ErrorApiDao.class);
+                                mProgressView.stopAndError(errorApiDao.getStatus_message(), true);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                mProgressView.stopAndError(e.getMessage(), true);
+                            }
+
                         }
                     }
 

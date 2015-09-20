@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import id.gits.popularmovie1.MovieDetailActivity;
 import id.gits.popularmovie1.R;
 import id.gits.popularmovie1.apis.daos.MovieDao;
@@ -22,15 +24,17 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private List<MovieDao> mDataset = new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mIvPoster;
-        public TextView mTvTitle;
+        @Bind(R.id.iv_poster)
+        ImageView mIvPoster;
+        @Bind(R.id.tv_title)
+        TextView mTvTitle;
         public View mRoot;
 
         public ViewHolder(View v) {
             super(v);
             mRoot = v;
-            mIvPoster = (ImageView) v.findViewById(R.id.iv_poster);
-            mTvTitle = (TextView) v.findViewById(R.id.tv_title);
+
+            ButterKnife.bind(this, v);
         }
     }
 

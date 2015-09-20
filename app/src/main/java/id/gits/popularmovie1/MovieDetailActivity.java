@@ -16,14 +16,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
 import id.gits.popularmovie1.apis.daos.MovieDao;
 import id.gits.popularmovie1.utils.Constant;
 
 public class MovieDetailActivity extends BaseActivity {
     private static final String EXTRA_ITEM = "item";
 
-    private TextView mTvTitle, mTvReleaseDate, mTvSynopsis, mTvVoteAvg;
-    private ImageView mIvPoster, mIvBackdrop;
+    @Bind(R.id.tv_title) TextView mTvTitle;
+    @Bind(R.id.tv_releasedate) TextView mTvReleaseDate;
+    @Bind(R.id.tv_synopsis) TextView mTvSynopsis;
+    @Bind(R.id.tv_voteavg) TextView mTvVoteAvg;
+    @Bind(R.id.iv_poster) ImageView mIvPoster;
+    @Bind(R.id.iv_backdrop) ImageView mIvBackdrop;
 
     private MovieDao mMovieDao;
 
@@ -38,13 +43,6 @@ public class MovieDetailActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-
-        mTvTitle = (TextView) findViewById(R.id.tv_title);
-        mTvReleaseDate = (TextView) findViewById(R.id.tv_releasedate);
-        mTvSynopsis = (TextView) findViewById(R.id.tv_synopsis);
-        mTvVoteAvg = (TextView) findViewById(R.id.tv_voteavg);
-        mIvPoster = (ImageView) findViewById(R.id.iv_poster);
-        mIvBackdrop = (ImageView) findViewById(R.id.iv_backdrop);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
